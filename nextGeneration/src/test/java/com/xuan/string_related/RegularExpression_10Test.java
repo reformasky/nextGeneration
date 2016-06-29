@@ -1,4 +1,4 @@
-package com.xuan.array_related.com.xuan.string_related;
+package com.xuan.string_related;
 
 import com.xuan.string_related.RegularExpression_10;
 import org.testng.Assert;
