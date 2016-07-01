@@ -1,4 +1,4 @@
-package com.xuan.array_related;
+package com.xuan.combination_related;
 
 import java.util.ArrayList;
 import java.util.Arrays;
