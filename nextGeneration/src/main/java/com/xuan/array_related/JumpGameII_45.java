@@ -7,7 +7,6 @@ public class JumpGameII_45 {
     public int jump(int[] nums) {
         int currMax = 0, lastMax = -1;
         int result = 0;
-        int currIndex = 0;
         while(currMax < nums.length - 1) {
             result++;
             int max = currMax;
