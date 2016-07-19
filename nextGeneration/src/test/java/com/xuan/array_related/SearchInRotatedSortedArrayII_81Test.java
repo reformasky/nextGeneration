@@ -28,7 +28,7 @@ public class SearchInRotatedSortedArrayII_81Test {
         for(int i = 0; i < n; i++) {
             int[] copy = rotate(nums, i);
             for(int j = 0; j < n; j++) {
-                boolean result = findInRotatedSortedArrNoDup_33.search(copy, j);
+                boolean result = findInRotatedSortedArrNoDup_33.search(copy,copy.length, j);
                 int r = Arrays.binarySearch(nums, j);
                 if (result != (r >= 0)) {
                     logger.info(time+ "");
