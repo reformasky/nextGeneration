@@ -7,31 +7,33 @@ import com.xuan.util.TreeNode;
  * Created by xzhou2 on 7/14/16.
  */
 public class SortedListToBST_109 {
-    public boolean isBalanced(TreeNode root) {
-        if (root == null) {
-            return true;
+    ListNode node;
+    public TreeNode sortedListToBST(ListNode head) {
+        if (head == null) {
+            return null;
         }
 
-        return height(root) >= 0;
+        ListNode temp = head;
+        node = head;
+        int count = 0;
+        while(temp != null) {
+            count++;
+            temp = temp.next;
+        }
+        return helper(0, count - 1);
     }
 
-    private int height(TreeNode node) {
-        if (node == null) {
-            return 0;
+    private TreeNode helper(int low, int high) {
+        if (low > high) {
+            return null;
         }
-        int l = height(node.left);
-        if (l < 0) {
-            return -1;
-        }
-        int r = height(node.right);
-        if (r < 0) {
-            return -1;
-        }
+        int mid = low + (high - low)/ 2;
+        TreeNode left = helper(low, mid - 1);
+        TreeNode result = new TreeNode(node.val);
+        node = node.next;
+        result.left = left;
+        result.right = helper(mid + 1, high);
+        return result;
 
-        if (Math.abs(l - r) > 1) {
-            return -1;
-        }
-
-        return Math.max(l ,r) + 1;
     }
 }
