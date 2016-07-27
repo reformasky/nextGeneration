@@ -39,7 +39,7 @@ public class FindInRotatedSortedArrNoDup_33Test {
     }
 
 
-    public int[] rotate(int[] nums, int i) {
+    public static int[] rotate(int[] nums, int i) {
         int[] result = new int[nums.length];
         int j;
         for(j = i; j < nums.length; j++) {
