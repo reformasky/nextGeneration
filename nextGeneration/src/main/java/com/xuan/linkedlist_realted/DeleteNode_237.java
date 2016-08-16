@@ -7,12 +7,7 @@ import com.xuan.util.ListNode;
  */
 public class DeleteNode_237 {
     public void deleteNode(ListNode node) {
-        ListNode curr = node, pre = curr;
-        while(curr.next != null) {
-            pre = curr;
-            curr.val = curr.next.val;
-            curr = curr.next;
-        }
-        pre.next = null;
+        node.val = node.next.val;
+        node.next = node.next.next;
     }
 }
