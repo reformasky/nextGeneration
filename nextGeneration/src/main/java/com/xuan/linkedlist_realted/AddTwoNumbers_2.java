@@ -2,36 +2,49 @@ package com.xuan.linkedlist_realted;
 
 import com.xuan.util.ListNode;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Stack;
+
 /**
  * Created by xzhou2 on 6/16/16.
  */
-public class AddTwoNumbers_2 {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode pre = new ListNode(-1);
-        int carryOver = 0;
-        ListNode currNode = pre;
-        while(l1 != null && l2 != null) {
-            int curr = carryOver + l1.val + l2.val;
-            ListNode tmp = new ListNode(curr % 10);
-            currNode.next = tmp;
-            currNode = currNode.next;
-            carryOver = curr / 10;
-            l1 = l1.next;
-            l2 = l2.next;
+class Solution {
+    public String findReplaceString(String S, int[] indexes, String[] sources, String[] targets) {
+        Entry[] entries = new Entry[indexes.length];
+        for(int i = 0; i < entries.length; i++) {
+            entries[i] = new Entry(indexes[i], sources[i], targets[i]);
         }
-        ListNode l = l1 == null ? l2 : l1;
-        while(l != null) {
-            int curr = carryOver + l.val;
-            ListNode tmp = new ListNode(curr % 10);
-            currNode.next = tmp;
-            currNode = currNode.next;
-            carryOver = curr / 10;
-            l = l.next;
+        Arrays.sort(entries, new Comparator<Entry>() {
+            @Override
+            public int compare(Entry a, Entry b) {
+                return Integer.compare(a.idx, b.idx);
+            }
+        });
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0, idx = 0; i < S.length(); i++) {
+            if (i == entries[idx].idx) {
+                if (S.startsWith(entries[idx].src,i)) {
+                    sb.append(entries[idx].tar);
+                    i += entries[idx].src.length();
+                }
+                i--;
+                idx++;
+            } else {
+                sb.append(S.charAt(i));
+            }
         }
-        if(carryOver != 0) {
-            ListNode tmp = new ListNode(carryOver % 10);
-            currNode.next = tmp;
+        return sb.toString();
+    }
+
+    class Entry {
+        int idx;
+        String src;
+        String tar;
+        Entry(int i, String s, String t) {
+            idx = i;
+            src = s;
+            tar = t;
         }
-        return pre.next;
     }
 }

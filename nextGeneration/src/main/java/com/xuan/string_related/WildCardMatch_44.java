@@ -31,29 +31,35 @@ public class WildCardMatch_44 {
         return cache[s.length()];
     }
 
-    public boolean isMatch_greedy(String s, String p) {
-        int idxS = 0, idxP = 0,
-                starIdx = -1, matchIdx = 0;
-        while(idxS < s.length()) {
-            if (idxP < p.length() && (p.charAt(idxP) == '?' || p.charAt(idxP) == s.charAt(idxS))) {
-                idxS++;
-                idxP++;
+    public boolean isMatch_greedy(String str, String pattern) {
+        int s = 0, p = 0, match = 0, starIdx = -1;
+        while (s < str.length()){
+            // advancing both pointers
+            if (p < pattern.length()  && (pattern.charAt(p) == '?' || str.charAt(s) == pattern.charAt(p))){
+                s++;
+                p++;
             }
-            else if (idxP < p.length() && p.charAt(idxP) == '*') {
-                starIdx = ++idxP;
-                matchIdx = idxS;
+            // * found, only advancing pattern pointer
+            else if (p < pattern.length() && pattern.charAt(p) == '*'){
+                starIdx = p;
+                match = s;
+                p++;
             }
-            else if (starIdx != -1) {
-                idxP = starIdx + 1;
-                idxS = ++matchIdx;
+            // last pattern pointer was *, advancing string pointer
+            else if (starIdx != -1){
+                p = starIdx + 1;
+                match++;
+                s = match;
             }
-            else {
-                return false;
-            }
+            //current pattern pointer is not star, last patter pointer was not *
+            //characters do not match
+            else return false;
         }
-        while(idxP < p.length() && p.charAt(idxP) == '*') {
-            idxP++;
-        }
-        return idxP == p.length();
+
+        //check for remaining characters in pattern
+        while (p < pattern.length() && pattern.charAt(p) == '*')
+            p++;
+
+        return p == pattern.length();
     }
 }

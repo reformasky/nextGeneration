@@ -12,22 +12,27 @@ public class KMPTest {
     @Test
     public void test() {
         for(int k = 0; k < 10; k++) {
-            int n = 2;
+            int n = 3;
             Random random = new Random();
-            char[] s = new char[1000],
-                    p = new char[9];
-            for(int i = 0; i < s.length; i++) {
-                s[i] = (char)(random.nextInt(n) + 'a');
-            }
-            for(int i = 0; i <p.length;i++) {
-                p[i] = (char)(random.nextInt(n) + 'a');
+            for(int j = 0; j < 100; j++) {
+                char[] s = new char[1000],
+                        p = new char[9];
+                for(int i = 0; i < s.length; i++) {
+                    s[i] = (char)(random.nextInt(n) + 'a');
+                }
+                for(int i = 0; i <p.length;i++) {
+                    p[i] = (char)(random.nextInt(n) + 'a');
+                }
+
+                int act = KMP.search(new String(s), new String(p));
+                if (act >= 0) {
+                    System.out.println(new String(s).substring(act) + "\n" + new String(p));
+                    Assert.assertTrue(new String(s).substring(act).startsWith(new String(p)));
+                } else{
+                    Assert.assertFalse(new String(s).contains(new String(p)));
+                }
             }
 
-            int act = KMP.search(new String(s), new String(p));
-            if (act >= 0) {
-                System.out.println(new String(s).substring(act) + "\n" + new String(p));
-                Assert.assertTrue(new String(s).substring(act).startsWith(new String(p)));
-            }
         }
 
 

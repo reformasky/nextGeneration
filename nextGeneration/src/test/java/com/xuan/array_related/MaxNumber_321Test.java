@@ -16,11 +16,11 @@ public class MaxNumber_321Test {
         for(int i = 0; i < n; i++) {num[i] = random.nextInt(15);}
         log(num);
 
-        MaxNumber_321 m = new MaxNumber_321();
-        for(int k = 0; k <= n; k++) {
-            int[] res = m.max(num, k);
-            log(res);
-        }
+//        MaxNumber_321 m = new MaxNumber_321();
+//        for(int k = 0; k <= n; k++) {
+//            int[] res = m.max(num, k);
+//            log(res);
+//        }
     }
 
 

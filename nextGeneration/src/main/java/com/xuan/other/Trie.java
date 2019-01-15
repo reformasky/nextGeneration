@@ -1,86 +1,60 @@
 package com.xuan.other;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 /**
  * Created by xzhou2 on 8/1/16.
  */
 
 
-class TrieNode{
-    boolean isEnd;
-    TrieNode[] next;
-    TrieNode() {
-        next = new TrieNode[26];
-    }
-
-    public void addWord(String word) {
-        TrieNode node = this;
-        for(int i = 0; i < word.length(); i++) {
-            char c = word.charAt(i);
-            if (node.next[c- 'a'] == null) {
-                node.next[c - 'a'] = new TrieNode();
-            }
-            node = node.next[c - 'a'];
+class Solution {
+    public String rearrangeString(String s, int k) {
+        int[][] counts = new int[26][2];
+        for(int i = 0; i < 26; i++) {
+            counts[i][0] = i;
         }
-        node.isEnd = true;
-    }
-
-    public boolean search(String word, int index) {
-        if (index == word.length()) {
-            return isEnd;
+        for(char c : s.toCharArray()) {
+            counts[c - 'a'][1]++;
         }
-        char c = word.charAt(index);
-        if (c == '.') {
-            for(TrieNode n : next) {
-                if (n != null && n.search(word, index + 1)) {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            if (next[c - 'a'] != null) {
-                return next[c - 'a'].search(word, index + 1);
-            } else {
-                return false;
+        int max = 0, count = 0;
+        for(int[] c : counts) {
+            if (c[1] > max) {
+                max = c[1];
+                count = 1;
+            } else if (c[1] == max) {
+                count++;
             }
         }
-    }
-}
-
-public class Trie {
-    private TrieNode root;
-
-    public Trie() {
-        root = new TrieNode();
-        root.isEnd = true;
-    }
-
-    // Inserts a word into the trie.
-    public void insert(String word) {
-        root.addWord(word);
-    }
-
-    // Returns if the word is in the trie.
-    public boolean search(String word) {
-        TrieNode end = getEnd(word);
-        return end != null && end.isEnd;
-    }
-
-    // Returns if there is any word in the trie
-    // that starts with the given prefix.
-    public boolean startsWith(String prefix) {
-        TrieNode end = getEnd(prefix);
-        return end != null;
-    }
-
-    private TrieNode getEnd(String word) {
-        TrieNode node = root;
-        for(int i = 0; i < word.length(); i++) {
-            char c = word.charAt(i);
-            if (node.next[c - 'a'] == null) {
-                return null;
-            }
-            node = node.next[c - 'a'];
+        int len = (max -1) * k  + count;
+        if (len > s.length()) {
+            return "";
         }
-        return node;
+        Queue<int[]> queue = new PriorityQueue<int[]>(new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a, int[] b) {
+                return Integer.compare(b[1], a[1]);
+            }
+        });
+        for(int[] c : counts) {
+            if (c[1] != 0) {
+                queue.offer(c);
+            }
+        }
+        char[] arr = new char[s.length()];
+        int[] idx = new int[26];
+        while(!queue.isEmpty()) {
+            int[] curr = queue.poll();
+            while(arr[idx[curr[0]]] != ' ') {
+                idx[curr[0]]++;
+            }
+            arr[idx[curr[0]]] = (char)(arr[0] + 'a');
+            idx[curr[0]] += k;
+            if (--curr[1] > 0) {
+                queue.offer(curr);
+            }
+        }
+        return new String(arr);
     }
 }

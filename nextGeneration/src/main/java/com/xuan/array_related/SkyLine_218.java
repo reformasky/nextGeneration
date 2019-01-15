@@ -13,7 +13,7 @@ public class SkyLine_218 {
         if (buildings == null || buildings.length == 0) {
             return result;
         }
-        PriorityQueue<int[]> enque = new PriorityQueue<int[]>(buildings.length, (p, q) -> (p[1] != q[1] ? (p[1] - q[1]) : (p[2] - q[2])));
+        PriorityQueue<int[]> enque = new PriorityQueue<>(buildings.length, (p, q) -> (p[1] != q[1] ? (p[1] - q[1]) : (p[2] - q[2])));
         for(int i = 0; i < buildings.length; i++) {
             int[] b = buildings[i];
             enque.offer(new int[]{0, b[0], b[2]});
